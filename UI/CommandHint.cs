@@ -1,5 +1,3 @@
 namespace OrganStopConsole.UI;
 
-record CommandHint
-{
-}
+public record CommandHint(string Key, string Label);

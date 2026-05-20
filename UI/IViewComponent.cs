@@ -1,5 +1,6 @@
 namespace OrganStopConsole.UI;
 
-interface IViewComponent
+public interface IViewComponent
 {
+    void Render();
 }
