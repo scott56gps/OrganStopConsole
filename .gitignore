@@ -1,0 +1,44 @@
+# Build results
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+
+# ASP.NET Core
+appsettings.Development.json
+
+# EF Core local databases
+*.db
+*.db-shm
+*.db-wal
+
+# SQLite
+*.sqlite
+*.sqlite3
+
+# NuGet
+*.nupkg
+packages/
+
+# Mac OS files
+.DS_Store
+
+# Environment variables / secrets
+.env
+.env.*
+
+# Local HTTPS certificates
+*.pfx
+
+# Node modules (if frontend included)
+node_modules/
+
+# Claude resume token
+.claude-resume-token
