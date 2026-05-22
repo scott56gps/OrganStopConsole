@@ -1,5 +1,5 @@
 namespace OrganStopConsole.UI.Screens;
 
-class CueViewScreen : Screen
+class CueViewScreen //: Screen
 {
 }
