@@ -55,7 +55,7 @@ class DivisionView : IViewComponent
 
 class CueViewContent : IViewComponent
 {
-    private const int Padding = 8;
+    private const int Padding = 2;
     private readonly List<(string Division, List<string> Stops)> _divisions;
 
     public CueViewContent(List<(string Division, List<string> Stops)> divisions)
@@ -76,7 +76,7 @@ class CueViewContent : IViewComponent
             foreach (var col in columns)
             {
                 string line = row < col.Count ? col[row] : new string(' ', DivisionView.Width);
-                Console.Write(line + " ");
+                Console.Write(line + new string(' ', Padding));
             }
             Console.WriteLine();
             Console.WriteLine();
