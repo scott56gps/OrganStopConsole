@@ -12,7 +12,6 @@ class CueSelectScreen : Screen
     {
         var selectedIndex = ParseSelection(input, _cues.Count);
         if (selectedIndex == null) return this;
-        // TODO: Return a reference to CueViewScreen
-        return null;
+        return new CueViewScreen();
     }
 }
