@@ -9,7 +9,9 @@ class PieceSelectScreen : Screen
 
     public override Screen? Navigate(string input)
     {
-        // TODO: Parse input, return next screen
-        return null;
+        var selectedIndex = ParseSelection(input, _pieces.Count);
+        if (selectedIndex == null) return this;
+        // TODO: Detect if there is only one scheme for the given piece and skip ahead to the CueSelectScreen if so
+        return new SchemeSelectScreen(input);
     }
 }

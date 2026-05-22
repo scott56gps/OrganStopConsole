@@ -1,2 +1,7 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using OrganStopConsole.UI;
+using OrganStopConsole.UI.Screens;
+
+var navigator = new Navigator();
+
+navigator.Push(new PieceSelectScreen());
+navigator.Run();
