@@ -7,7 +7,7 @@ public abstract class Screen : IViewComponent
     protected virtual IReadOnlyList<CommandHint> Commands =>
         [new CommandHint("q", "Quit")];
 
-    public abstract Screen? Navigate(string input);
+    public abstract NavResult Navigate(string input);
 
     protected int? ParseSelection(string input, int count)
     {

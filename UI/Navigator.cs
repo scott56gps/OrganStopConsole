@@ -13,11 +13,14 @@ public class Navigator
             var current = _stack.Peek();
             current.Render();
             var input = Console.ReadLine() ?? "";
-            var next = current.Navigate(input);
-            if (next is not null)
-                _stack.Push(next);
-            else
-                _stack.Pop();
+            var result = current.Navigate(input);
+            switch (result)
+            {
+                case Push p: _stack.Push(p.Screen); break;
+                case Pop: _stack.Pop(); break;
+                case Quit: _stack.Clear(); break;
+                case Identity: break;
+            }
         }
     }
 }

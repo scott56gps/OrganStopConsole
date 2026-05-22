@@ -11,10 +11,14 @@ class CueViewScreen : Screen
 
     protected override IViewComponent Header => new HeaderComponent($"Cue {_cueData.Item1}: {_pieceName}");
     protected override IViewComponent Content => new CueViewContent(_cueData.Item2);
+    protected override IReadOnlyList<CommandHint> Commands =>
+        [.. base.Commands, new CommandHint("b", "Back")];
 
-    public override Screen? Navigate(string input)
+    public override NavResult Navigate(string input)
     {
-        return this;
+        if (input == "q") return new Quit();
+        if (input == "b") return new Pop();
+        return new Identity();
     }
 }
 

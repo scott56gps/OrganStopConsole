@@ -7,10 +7,11 @@ class PieceSelectScreen : Screen
 
     protected override IViewComponent Content => new OptionListView(_pieces);
 
-    public override Screen? Navigate(string input)
+    public override NavResult Navigate(string input)
     {
+        if (input == "q") return new Quit();
         if (ParseSelection(input, _pieces.Count) is int index)
-            return new SchemeSelectScreen(_pieces[index]);
-        return this;
+            return new Push(new SchemeSelectScreen(_pieces[index]));
+        return new Identity();
     }
 }
