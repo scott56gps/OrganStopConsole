@@ -2,22 +2,35 @@ namespace OrganStopConsole.UI.Screens;
 
 class CueViewScreen : Screen
 {
-    private readonly (string, List<(string Division, List<string> Stops)>) _cueData = (
-        "1", [
+    private readonly List<(string Label, List<(string Division, List<string> Stops)> Divisions)> _cues = [
+        ("1", [
             ("Great", ["8' Principal", "4' Octave"]),
             ("Swell", ["8' Hohlflote", "2 2/3' Mixture"])
-        ]);
+        ]),
+        ("2", [
+            ("Great", ["16' Principal", "8' Prestant", "8' Trumpet"]),
+            ("Swell", ["8' Principal", "8' Violin", "4' Octave", "1 2/5' Larigot"])
+        ])
+    ];
+    private int _currentIndex = 0;
     private readonly string _pieceName = "Mode de re";
 
-    protected override IViewComponent Header => new HeaderComponent($"Cue {_cueData.Item1}: {_pieceName}");
-    protected override IViewComponent Content => new CueViewContent(_cueData.Item2);
+    protected override IViewComponent Header => new HeaderComponent($"Cue {_cues[_currentIndex].Item1}: {_pieceName}");
+    protected override IViewComponent Content => new CueViewContent(_cues[_currentIndex].Item2);
     protected override IReadOnlyList<CommandHint> Commands =>
-        [.. base.Commands, new CommandHint("b", "Back")];
+        [.. base.Commands, new CommandHint("b", "Back"), new CommandHint("<enter>", "Next Cue")];
 
-    public override NavResult Navigate(string input)
+    public override NavResult Navigate(string input) => input switch
     {
-        if (input == "q") return new Quit();
-        if (input == "b") return new Pop();
+        ""  => AdvanceCue(),
+        "q" => new Quit(),
+        "b" => new Pop(),
+        _   => new Identity()
+    };
+
+    private NavResult AdvanceCue()
+    {
+        _currentIndex = (_currentIndex < _cues.Count - 1) ? _currentIndex + 1 : 0;
         return new Identity();
     }
 }
