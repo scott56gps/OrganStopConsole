@@ -20,12 +20,12 @@ class CueViewScreen : Screen
     protected override IReadOnlyList<CommandHint> Commands =>
         [.. base.Commands, new CommandHint("b", "Back"), new CommandHint("<enter>", "Next Cue")];
 
-    public override NavResult Navigate(string input) => input switch
+    public override Task<NavResult> Navigate(string input) => input switch
     {
-        ""  => AdvanceCue(),
-        "q" => new Quit(),
-        "b" => new Pop(),
-        _   => new Identity()
+        ""  => Task.FromResult<NavResult>(AdvanceCue()),
+        "q" => Task.FromResult<NavResult>(new Quit()),
+        "b" => Task.FromResult<NavResult>(new Pop()),
+        _   => Task.FromResult<NavResult>(new Identity())
     };
 
     private NavResult AdvanceCue()

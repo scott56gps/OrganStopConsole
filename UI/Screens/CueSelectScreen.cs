@@ -9,12 +9,12 @@ class CueSelectScreen : Screen
     protected override IReadOnlyList<CommandHint> Commands =>
         [.. base.Commands, new CommandHint("b", "Back")];
 
-    public override NavResult Navigate(string input)
+    public override Task<NavResult> Navigate(string input)
     {
-        if (input == "q") return new Quit();
-        if (input == "b") return new Pop();
+        if (input == "q") return Task.FromResult<NavResult>(new Quit());
+        if (input == "b") return Task.FromResult<NavResult>(new Pop());
         var selectedIndex = ParseSelection(input, _cues.Count);
-        if (selectedIndex != null) return new Push(new CueViewScreen());
-        return new Identity();
+        if (selectedIndex != null) return Task.FromResult<NavResult>(new Push(new CueViewScreen()));
+        return Task.FromResult<NavResult>(new Identity());
     }
 }

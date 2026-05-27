@@ -6,14 +6,14 @@ public class Navigator
 
     public void Push(Screen screen) => _stack.Push(screen);
 
-    public void Run()
+    public async Task Run()
     {
         while (_stack.Count > 0)
         {
             var current = _stack.Peek();
             current.Render();
             var input = Console.ReadLine() ?? "";
-            var result = current.Navigate(input);
+            var result = await current.Navigate(input);
             switch (result)
             {
                 case Push p: _stack.Push(p.Screen); break;

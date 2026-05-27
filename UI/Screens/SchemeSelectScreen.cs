@@ -15,12 +15,12 @@ class SchemeSelectScreen : Screen
         _pieceName = pieceName;
     }
 
-    public override NavResult Navigate(string input)
+    public override Task<NavResult> Navigate(string input)
     {
-        if (input == "q") return new Quit();
-        if (input == "b") return new Pop();
+        if (input == "q") return Task.FromResult<NavResult>(new Quit());
+        if (input == "b") return Task.FromResult<NavResult>(new Pop());
         var selectedIndex = ParseSelection(input, _schemes.Count);
-        if (selectedIndex != null) return new Push(new CueSelectScreen());
-        return new Identity();
+        if (selectedIndex != null) return Task.FromResult<NavResult>(new Push(new CueSelectScreen()));
+        return Task.FromResult<NavResult>(new Identity());
     }
 }
