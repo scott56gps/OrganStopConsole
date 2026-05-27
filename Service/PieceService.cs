@@ -1,3 +1,4 @@
+using System.Text.Json;
 using OrganStopConsole.Models;
 
 namespace OrganStopConsole.Service;
@@ -13,6 +14,15 @@ public class PieceService
 
     public async Task<List<Piece>> GetPieces()
     {
-        return await _networkClient.SendRequest<List<Piece>>("/api/pieces");
+        try
+        {
+            return await _networkClient.SendRequest<List<Piece>>("/api/pieces");
+        } catch (HttpRequestException e)
+        {
+            throw new InvalidOperationException("Failed to contact the API.", e);
+        } catch (JsonException e)
+        {
+            throw new InvalidOperationException("Failed to parse pieces response.", e);
+        }
     }
 }
