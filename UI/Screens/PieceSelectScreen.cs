@@ -5,14 +5,14 @@ namespace OrganStopConsole.UI.Screens;
 class PieceSelectScreen : Screen
 {
     private readonly PieceSelectViewModel viewModel = new PieceSelectViewModel();
-    private readonly List<PieceSummary> _pieces;
+    private readonly List<PieceSummary> _pieceSummaries;
 
     protected override IViewComponent Header => new HeaderComponent("Please select a piece:");
     protected override IViewComponent Content => new OptionListView(_pieces.Select(p => $"{p.PieceName} - {p.ComposerName}").ToList());
 
-    public PieceSelectScreen()
+    public PieceSelectScreen(List<PieceSummary> pieceSummaries)
     {
-        _pieces = viewModel.GetPieceSummaries();
+        _pieceSummaries = pieceSummaries;
     }
 
     public override NavResult Navigate(string input)
