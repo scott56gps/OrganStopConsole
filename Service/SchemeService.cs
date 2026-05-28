@@ -3,20 +3,23 @@ using OrganStopConsole.Models;
 
 namespace OrganStopConsole.Service;
 
-public class PieceService
+public class SchemeService
 {
     private readonly NetworkClient _networkClient;
 
-    public PieceService(NetworkClient networkClient)
+    public SchemeService(NetworkClient networkClient)
     {
         _networkClient = networkClient;
     }
 
-    public async Task<List<Piece>> GetPieces()
+    /**
+       Gets the detailed cues for a scheme.
+    */
+    public async Task<List<StopCueDetail>> GetCueDetails(int schemeId)
     {
         try
         {
-            return await _networkClient.SendRequest<List<Piece>>("/api/pieces");
+            return await _networkClient.SendRequest<List<StopCueDetail>>($"/api/schemes/{schemeId}/stop-cues/detail");
         }
         catch (HttpRequestException e)
         {
