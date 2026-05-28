@@ -1,13 +1,22 @@
+using OrganStopConsole.Models;
+
 namespace OrganStopConsole.UI.Screens;
 
 class CueSelectScreen : Screen
 {
-    private readonly List<string> _cues = ["mm. 1", "mm. 32", "mm. 45", "mm. 62"];
+    private readonly List<StopCue> _cues;
 
     protected override IViewComponent Header => new HeaderComponent("Please select a cue:");
-    protected override IViewComponent Content => new OptionListView(_cues);
+    protected override IViewComponent Content => new OptionListView(
+        _cues.Select(c => $"{c.Label}").ToList()
+    );
     protected override IReadOnlyList<CommandHint> Commands =>
         [.. base.Commands, new CommandHint("b", "Back")];
+
+    public CueSelectScreen(List<StopCue> cues)
+    {
+        _cues = cues;
+    }
 
     public override Task<NavResult> Navigate(string input)
     {
