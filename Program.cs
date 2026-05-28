@@ -1,10 +1,10 @@
-﻿using OrganStopConsole.UI;
+﻿using OrganStopConsole.Service;
+using OrganStopConsole.UI;
 using OrganStopConsole.UI.Screens;
-using OrganStopConsole.UI.ViewModels;
 
-var pieceViewModel = new PieceSelectViewModel();
-var summaries = await pieceViewModel.GetPieceSummaries();
+var pieceService = new PieceService(new NetworkClient());
+var pieces = await pieceService.GetPieces();
 
 var navigator = new Navigator();
-navigator.Push(new PieceSelectScreen(summaries));
+navigator.Push(new PieceSelectScreen(pieces));
 await navigator.Run();
