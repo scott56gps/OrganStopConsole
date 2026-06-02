@@ -7,6 +7,7 @@ public class NetworkClient
 {
     private readonly JsonSerializerOptions _jsonOptions = new JsonSerializerOptions
     {
+        PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
         PropertyNameCaseInsensitive = true,
         Converters = { new JsonStringEnumConverter() }
     };

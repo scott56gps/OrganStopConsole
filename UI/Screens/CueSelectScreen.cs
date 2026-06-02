@@ -29,7 +29,8 @@ class CueSelectScreen : Screen
         var selectedIndex = ParseSelection(input, _cues.Count);
         if (ParseSelection(input, _cues.Count) is int index)
             return new Push(new CueViewScreen(
-                                await _schemeService.GetCueDetails(_schemeId)));
+                                await _schemeService.GetCueDetails(_schemeId),
+                                index));
         return new Identity();
     }
 }

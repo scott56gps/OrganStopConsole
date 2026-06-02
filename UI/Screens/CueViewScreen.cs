@@ -5,16 +5,17 @@ namespace OrganStopConsole.UI.Screens;
 class CueViewScreen : Screen
 {
     private readonly List<StopCueDetail> _cues;
-    private int _currentIndex = 0;
+    private int _currentCueIndex = 0;
 
-    protected override IViewComponent Header => new HeaderComponent($"Cue {_currentIndex + 1}");
-    protected override IViewComponent Content => new CueViewContent(_cues[_currentIndex].Divisions);
+    protected override IViewComponent Header => new HeaderComponent($"Cue {_currentCueIndex + 1}");
+    protected override IViewComponent Content => new CueViewContent(_cues[_currentCueIndex].Divisions);
     protected override IReadOnlyList<CommandHint> Commands =>
         [.. base.Commands, new CommandHint("b", "Back"), new CommandHint("<enter>", "Next Cue")];
 
-    public CueViewScreen(List<StopCueDetail> cues)
+    public CueViewScreen(List<StopCueDetail> cues, int currentCueIndex)
     {
         _cues = cues;
+        _currentCueIndex = currentCueIndex;
     }
 
     public override Task<NavResult> Navigate(string input) => input switch
@@ -27,7 +28,7 @@ class CueViewScreen : Screen
 
     private NavResult AdvanceCue()
     {
-        _currentIndex = (_currentIndex < _cues.Count - 1) ? _currentIndex + 1 : 0;
+        _currentCueIndex = (_currentCueIndex < _cues.Count - 1) ? _currentCueIndex + 1 : 0;
         return new Identity();
     }
 }
