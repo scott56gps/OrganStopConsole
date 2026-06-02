@@ -7,7 +7,7 @@ class CueViewScreen : Screen
     private readonly List<StopCueDetail> _cues;
     private int _currentCueIndex = 0;
 
-    protected override IViewComponent Header => new HeaderComponent($"Cue {_currentCueIndex + 1}");
+    protected override IViewComponent Header => new HeaderComponent($"Cue {_currentCueIndex + 1}: {_cues[_currentCueIndex].Label}");
     protected override IViewComponent Content => new CueViewContent(_cues[_currentCueIndex].Divisions);
     protected override IReadOnlyList<CommandHint> Commands =>
         [.. base.Commands, new CommandHint("b", "Back"), new CommandHint("<enter>", "Next Cue")];
