@@ -24,18 +24,17 @@ class PieceSelectScreen : Screen
         {
             // Do we need to push the SchemeSelectScreen?
             var selectedPiece = _pieces[index];
-            if (selectedPiece.StopSchemes is List<StopScheme> stopSchemes)
-                if (stopSchemes.Count == 1)
-                {
-                    return Task.FromResult<NavResult>(
-                        new Push(new CueSelectScreen(
-                                     selectedPiece.StopSchemes[0].Id,
-                                     selectedPiece.StopSchemes[0].StopCues)));
-                }
-                else
-                {
-                    return Task.FromResult<NavResult>(new Push(new SchemeSelectScreen(selectedPiece)));
-                }
+            if (selectedPiece.StopSchemes.Count == 1)
+            {
+                return Task.FromResult<NavResult>(
+                    new Push(new CueSelectScreen(
+                                 selectedPiece.StopSchemes[0].Id,
+                                 selectedPiece.StopSchemes[0].StopCues)));
+            }
+            else
+            {
+                return Task.FromResult<NavResult>(new Push(new SchemeSelectScreen(selectedPiece)));
+            }
         }
         return Task.FromResult<NavResult>(new Identity());
     }

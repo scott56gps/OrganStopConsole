@@ -1,9 +1,54 @@
 namespace OrganStopConsole.Models;
 
-public record Piece(int Id, string Name, string? Composer, List<StopScheme> StopSchemes);
-public record StopScheme(int Id, string Name, string? Notes, Organ Organ, List<StopCue> StopCues);
-public record Organ(int Id, string Name, string Location);
-public record StopCue(int Id, string? Label);
-public record StopCueDetail(int Id, string? Label, List<Division> Divisions);
-public record Division(string Name, bool HasExpression, ExpressionPosition? ExpressionPosition, List<Stop> Stops);
-public record Stop(int Id, string Name, string? Pitch, StopFamily Family);
+public record Piece
+{
+    public int Id { get; init; }
+    public string Name { get; init; } = "";
+    public string? Composer{ get; init; }
+    public List<StopScheme> StopSchemes { get; init; } = [];
+}
+
+public record StopScheme
+{
+    public int Id { get; init; }
+    public string Name { get; init; } = "";
+    public string? Notes { get; init; }
+    public Organ Organ { get; init; } = new();
+    public List<StopCue> StopCues { get; init; } = [];
+}
+
+public record Organ
+{
+    public int Id { get; init; }
+    public string Name { get; init; } = "";
+    public string Location { get; init; } = "";
+}
+
+public record StopCue
+{
+    public int Id { get; init; }
+    public string? Label { get; init; }
+}
+
+public record StopCueDetail
+{
+    public int Id { get; init; }
+    public string? Label { get; init; }
+    public List<Division> Divisions { get; init; } = [];
+}
+
+public record Division
+{
+    public string Name { get; init; } = "";
+    public bool HasExpression { get; init; }
+    public ExpressionPosition? ExpressionPosition { get; init; }
+    public List<Stop> Stops { get; init; } = [];
+}
+
+public record Stop
+{
+    public int Id { get; init; }
+    public string Name { get; init; } = "";
+    public string? Pitch { get; init; }
+    public StopFamily Family { get; init; } = new();
+}
