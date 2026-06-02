@@ -25,7 +25,10 @@ class SchemeSelectScreen : Screen
 
         if (ParseSelection(input, _piece.StopSchemes.Count) is int index)
             return Task.FromResult<NavResult>(
-                new Push(new CueSelectScreen(_piece.StopSchemes[index].StopCues)));
+                new Push(
+                    new CueSelectScreen(
+                    _piece.StopSchemes[index].Id,
+                    _piece.StopSchemes[index].StopCues)));
         return Task.FromResult<NavResult>(new Identity());
     }
 }

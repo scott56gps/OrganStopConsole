@@ -1,24 +1,21 @@
+using OrganStopConsole.Models;
+
 namespace OrganStopConsole.UI.Screens;
 
 class CueViewScreen : Screen
 {
-    private readonly List<(string Label, List<(string Division, List<string> Stops)> Divisions)> _cues = [
-        ("1", [
-            ("Great", ["8' Principal", "4' Octave"]),
-            ("Swell", ["8' Hohlflote", "2 2/3' Mixture"])
-        ]),
-        ("2", [
-            ("Great", ["16' Principal", "8' Prestant", "8' Trumpet"]),
-            ("Swell", ["8' Principal", "8' Violin", "4' Octave", "1 2/5' Larigot"])
-        ])
-    ];
+    private readonly List<StopCueDetail> _cues;
     private int _currentIndex = 0;
-    private readonly string _pieceName = "Mode de re";
 
-    protected override IViewComponent Header => new HeaderComponent($"Cue {_cues[_currentIndex].Item1}: {_pieceName}");
-    protected override IViewComponent Content => new CueViewContent(_cues[_currentIndex].Item2);
+    protected override IViewComponent Header => new HeaderComponent($"Cue {_currentIndex + 1}");
+    protected override IViewComponent Content => new CueViewContent(_cues[_currentIndex].Divisions);
     protected override IReadOnlyList<CommandHint> Commands =>
         [.. base.Commands, new CommandHint("b", "Back"), new CommandHint("<enter>", "Next Cue")];
+
+    public CueViewScreen(List<StopCueDetail> cues)
+    {
+        _cues = cues;
+    }
 
     public override Task<NavResult> Navigate(string input) => input switch
     {
@@ -35,47 +32,12 @@ class CueViewScreen : Screen
     }
 }
 
-class DivisionView : IViewComponent
-{
-    public const int Width = 20;
-    private readonly (string DivisionName, List<string> Stops) _division;
-
-    public DivisionView((string, List<string>) division)
-    {
-        _division = division;
-    }
-
-    public void Render()
-    {
-        string centered = _division.DivisionName.PadLeft((_division.DivisionName.Length + Width) / 2);
-        Console.WriteLine(centered);
-        Console.WriteLine(new string('-', Width));
-        foreach (var stop in _division.Stops)
-            Console.WriteLine($"{stop}");
-    }
-
-    /**
-       Provides the content of this view as a list of horizontal lines.
-     */
-    public List<string> ToLines()
-    {
-        var lines = new List<string>();
-        var divisionName = _division.DivisionName;
-        string centered = divisionName.PadLeft((divisionName.Length + Width) / 2);
-        lines.Add(centered.PadRight(Width));
-        lines.Add(new string('-', Width));
-        foreach (var stop in _division.Stops)
-            lines.Add($"{stop}".PadRight(Width));
-        return lines;
-    }
-}
-
 class CueViewContent : IViewComponent
 {
     private const int Padding = 2;
-    private readonly List<(string Division, List<string> Stops)> _divisions;
+    private readonly List<Division> _divisions;
 
-    public CueViewContent(List<(string Division, List<string> Stops)> divisions)
+    public CueViewContent(List<Division> divisions)
     {
         _divisions = divisions;
     }
@@ -98,5 +60,41 @@ class CueViewContent : IViewComponent
             Console.WriteLine();
             Console.WriteLine();
         }
+    }
+}
+
+class DivisionView : IViewComponent
+{
+    public const int Width = 20;
+    private readonly Division _division;
+
+    public DivisionView(Division division)
+    {
+        _division = division;
+    }
+
+    public void Render()
+    {
+        var divisionName = _division.Name;
+        string centered = divisionName.PadLeft((divisionName.Length + Width) / 2);
+        Console.WriteLine(centered);
+        Console.WriteLine(new string('-', Width));
+        foreach (var stop in _division.Stops)
+            Console.WriteLine($"{stop.Pitch} {stop.Name}");
+    }
+
+    /**
+       Provides the content of this view as a list of horizontal lines.
+     */
+    public List<string> ToLines()
+    {
+        var lines = new List<string>();
+        var divisionName = _division.Name;
+        string centered = divisionName.PadLeft((divisionName.Length + Width) / 2);
+        lines.Add(centered.PadRight(Width));
+        lines.Add(new string('-', Width));
+        foreach (var stop in _division.Stops)
+            lines.Add($"{stop.Pitch} {stop.Name}");
+        return lines;
     }
 }
